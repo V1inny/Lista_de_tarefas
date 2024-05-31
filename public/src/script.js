@@ -2,7 +2,7 @@ const inputElement = document.querySelector(".new-task-input");
 const addTaskButton = document.querySelector(".new-task-button");
 const tasksContainer = document.querySelector(".tasks-container");
 
-const API_URL = 'http://localhost:3000/tasks'; // Corrigido para o endpoint correto
+const API_URL = 'http://localhost:3000/tasks';
 
 const validateInput = () => inputElement.value.trim().length > 0;
 
@@ -53,7 +53,7 @@ const handleClick = async (taskContent, taskId) => {
   taskContent.classList.toggle("completed");
 };
 
-const handleDeleteClick = async (taskItemContainer, taskId) => {
+const handleDeletClick = async (taskItemContainer, taskId) => {
   await deleteTask(taskId);
   taskItemContainer.remove();
 };
@@ -81,7 +81,7 @@ const addTaskToDOM = (task) => {
   deleteItem.classList.add("fa-regular");
   deleteItem.classList.add("fa-trash-can");
 
-  deleteItem.addEventListener("click", () => handleDeleteClick(taskItemContainer, task.id));
+  deleteItem.addEventListener("click", () => handleDeletClick(taskItemContainer, task.id));
 
   const checkboxLabel = document.createElement("label");
   checkboxLabel.innerText = "Completo";
@@ -110,12 +110,12 @@ const addTaskToDOM = (task) => {
   tasksContainer.appendChild(taskItemContainer);
 };
 
-const resfreshTasksUsingAPI = async () => {  // Renomeado para clareza
+const resfreshTasksUsingLocalStorage = async () => {
   const tasksFromAPI = await fetchTasks();
   tasksFromAPI.forEach(task => addTaskToDOM(task));
 };
 
-resfreshTasksUsingAPI();
+resfreshTasksUsingLocalStorage();
 
 addTaskButton.addEventListener("click", () => handleAddTask());
 inputElement.addEventListener("change", () => handleInputChange());
