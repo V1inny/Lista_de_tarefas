@@ -15,6 +15,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 let tasks = [];
 let currentId = 1;  // Contador global para ID único
 
+// API
 // Endpoint para obter todas as tarefas
 app.get('/tasks', (req, res) => {
   res.json(tasks);
@@ -32,7 +33,8 @@ app.post('/tasks', (req, res) => {
 app.delete('/tasks/:id', (req, res) => {
   const { id } = req.params;
   tasks = tasks.filter(task => task.id != id);
-  res.status(204).send();
+  
+    res.json("Tarefa excluida");
 });
 
 // Endpoint para atualizar uma tarefa

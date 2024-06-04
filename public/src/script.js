@@ -33,6 +33,7 @@ const updateTask = async (id, task) => {
   return response.json();
 };
 
+//botão para adicionar uma nova tarefa.
 const handleAddTask = async () => {
   const inputIsValid = validateInput();
 
@@ -47,23 +48,26 @@ const handleAddTask = async () => {
   inputElement.value = "";
 };
 
+//ALTERNAR TAREFA CONCLUIDA
 const handleClick = async (taskContent, taskId) => {
   const updatedTask = { description: taskContent.innerText, isCompleted: !taskContent.classList.contains("completed") };
   await updateTask(taskId, updatedTask);
   taskContent.classList.toggle("completed");
 };
 
+//DELETAR TAREFA
 const handleDeletClick = async (taskItemContainer, taskId) => {
   await deleteTask(taskId);
   taskItemContainer.remove();
 };
 
+//ATUALIZAR CONCLUSÃO DE TAREFA
 const handleCheckboxChange = async (taskContent, checkbox, taskId) => {
   const updatedTask = { description: taskContent.innerText, isCompleted: checkbox.checked };
   await updateTask(taskId, updatedTask);
   taskContent.classList.toggle("completed", checkbox.checked);
 };
-
+//CRIANDO UM CONTAINER DA TAREFA
 const addTaskToDOM = (task) => {
   const taskItemContainer = document.createElement("div");
   taskItemContainer.classList.add("task-item");
@@ -77,12 +81,14 @@ const addTaskToDOM = (task) => {
 
   taskContent.addEventListener("click", () => handleClick(taskContent, task.id));
 
+//CRIANDO UM ICONE DE DELETA 
   const deleteItem = document.createElement("i");
   deleteItem.classList.add("fa-regular");
   deleteItem.classList.add("fa-trash-can");
 
   deleteItem.addEventListener("click", () => handleDeletClick(taskItemContainer, task.id));
 
+  //CRIAÇÃO DO ROTULO DO CHECKBOX DE COMPLETAR TAREFA
   const checkboxLabel = document.createElement("label");
   checkboxLabel.innerText = "Completo";
   checkboxLabel.classList.add("checkbox-label");
@@ -98,7 +104,8 @@ const addTaskToDOM = (task) => {
   checkbox.addEventListener("change", () => handleCheckboxChange(taskContent, checkbox, task.id));
 
   checkboxLabel.prepend(checkbox);
-
+ 
+  //CRIANDO UMA AÇÃO NO CONTEINER 
   const actionContainer = document.createElement("div");
   actionContainer.classList.add("action-container");
   actionContainer.appendChild(checkboxLabel);
